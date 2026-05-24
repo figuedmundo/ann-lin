@@ -5,10 +5,13 @@ import { projects } from '../data/site';
 
 type Props = {
   locale: Locale;
+  start?: number;
+  limit?: number;
 };
 
-const { locale } = Astro.props;
+const { locale, start = 0, limit } = Astro.props;
+const visibleProjects = (limit === undefined ? projects.slice(start) : projects.slice(start, start + limit));
 ---
 <div class="portfolio-grid">
-  {projects.map((project, index) => <ProjectCard project={project} locale={locale} featured={index === 0} />)}
+  {visibleProjects.map((project, index) => <ProjectCard project={project} locale={locale} featured={start === 0 && index === 0} />)}
 </div>

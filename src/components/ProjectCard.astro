@@ -19,6 +19,9 @@ const { project, locale, featured = false } = Astro.props;
       <p class="eyebrow">{project.kicker[locale]}</p>
       <h3>{project.title[locale]}</h3>
       <p>{project.summary[locale]}</p>
+      <ul class="project-card__tags" aria-label={ui.projectTagsLabel[locale]}>
+        {project.tags.map((tag) => <li>{tag[locale]}</li>)}
+      </ul>
       <span>{ui.viewProject[locale]} →</span>
     </div>
   </a>

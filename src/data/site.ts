@@ -362,6 +362,14 @@ export const ui = {
     'zh-TW': '精選作品',
     en: 'Featured Work',
   },
+  projectEvidenceLead: {
+    'zh-TW': '精選作品，呈現結構比例、細節處理與舊木再利用的實作能力。',
+    en: 'Selected projects that show joinery discipline, detail care, and reclaimed-material thinking.',
+  },
+  projectTagsLabel: {
+    'zh-TW': '作品標籤',
+    en: 'Project tags',
+  },
   storyTitle: {
     'zh-TW': '不是丟棄，而是重新理解材料。',
     en: 'Not disposal — a second reading of material.',

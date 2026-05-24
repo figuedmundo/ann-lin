@@ -3,129 +3,149 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectGrid from '../../components/ProjectGrid.astro';
 import {
   profile,
+  projects,
   coreSkills,
   workExperience,
   certifications,
   trainingProjects,
   additionalBackground,
   cvLabels,
+  ui,
 } from '../../data/site';
 
 const locale = 'zh-TW';
 const labels = cvLabels[locale];
+const featuredProject = projects[0];
 ---
 
 <BaseLayout title="林庭安 Ann — 木作履歷" description={profile.professionalProfile[locale]} locale={locale} alternatePath="/en">
-  <div class="cv-page">
-    <!-- CV Hero -->
+  <div class="cv-page cv-page--editorial">
     <header class="cv-hero">
-      <p class="cv-intro">{profile.intro[locale]}</p>
-      <h1>{profile.name}</h1>
-      <p class="cv-headline">{profile.headline[locale]}</p>
+      <div class="cv-hero__copy">
+        <p class="cv-intro">{profile.intro[locale]}</p>
+        <h1>{profile.name}</h1>
+        <p class="cv-headline">{profile.headline[locale]}</p>
+        <p class="cv-lede">{profile.bio[locale]}</p>
+      </div>
+      <figure class="cv-hero__visual">
+        <img src={profile.heroImage} alt={profile.name} loading="eager" />
+        <figcaption>
+          <span>{profile.location}</span>
+          <strong>{profile.intro[locale]}</strong>
+        </figcaption>
+      </figure>
     </header>
 
-    <!-- 聯絡資訊 -->
+    <section class="cv-section cv-section--proof" id="project-evidence">
+      <div class="cv-section__lead">
+        <h2>{labels.projectEvidence}</h2>
+        <p>{ui.projectEvidenceLead[locale]}</p>
+      </div>
+      <article class="featured-proof">
+        <div class="featured-proof__copy">
+          <p class="eyebrow">{ui.featuredWork[locale]}</p>
+          <h3>{featuredProject.title[locale]}</h3>
+          <p>{featuredProject.story[locale]}</p>
+          <ul class="featured-proof__meta">
+            {featuredProject.meta.map((item) => <li>{item[locale]}</li>)}
+          </ul>
+        </div>
+        <img src={featuredProject.gallery[0]} alt={featuredProject.title[locale]} loading="lazy" />
+      </article>
+      <ProjectGrid locale={locale} start={1} />
+    </section>
+
+    <section class="cv-section" id="professional-profile">
+      <h2>{labels.professionalProfile}</h2>
+      <p class="profile-text">{profile.professionalProfile[locale]}</p>
+    </section>
+
+    <section class="cv-section cv-section--split" id="core-capabilities">
+      <div>
+        <h2>{labels.coreSkills}</h2>
+        <div class="skills-grid skills-grid--chips">
+          {coreSkills.map((group) => (
+            <div class="skill-group">
+              <h3>{group.heading[locale]}</h3>
+              <ul>
+                {group.items.map((item) => <li>{item[locale]}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <h2>{labels.workExperience}</h2>
+        {workExperience.map((exp) => (
+          <article class="experience-entry">
+            <div class="experience-header">
+              <h3>{exp.role[locale]}</h3>
+              <p class="experience-employer">{exp.employer[locale]}</p>
+            </div>
+            <ul>
+              {exp.bullets.map((bullet) => <li>{bullet[locale]}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="cv-section cv-section--split" id="training-certifications">
+      <div>
+        <h2>{labels.trainingCertifications}</h2>
+        {certifications.map((cert) => (
+          <article class="cert-entry">
+            <div class="cert-header">
+              <h3>{cert.name[locale]}</h3>
+              {cert.issuer && <p class="cert-issuer">{cert.issuer[locale]}</p>}
+              {cert.duration && <p class="cert-duration">{labels.duration}：{cert.duration[locale]}</p>}
+            </div>
+            {cert.bullets && (
+              <ul>
+                {cert.bullets.map((bullet) => <li>{bullet[locale]}</li>)}
+              </ul>
+            )}
+          </article>
+        ))}
+      </div>
+      <div>
+        <h2>{labels.trainingProjects}</h2>
+        <div class="training-grid">
+          {trainingProjects.map((tp) => (
+            <article class="training-card">
+              <h3>{tp.name[locale]}</h3>
+              <ul>
+                {tp.bullets.map((bullet) => <li>{bullet[locale]}</li>)}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="cv-section" id="additional-background">
+      <h2>{labels.additionalBackground}</h2>
+      <ul class="background-list background-list--compact">
+        {additionalBackground.map((item) => <li>{item[locale]}</li>)}
+      </ul>
+    </section>
+
     <section class="cv-section" id="contact-details">
       <h2>{labels.contactDetails}</h2>
       <div class="contact-card">
         <div class="contact-card__item">
-          <span class="contact-card__label">{labels.phone}</span>
-          <span class="contact-card__value">{profile.phone}</span>
-        </div>
-        <div class="contact-card__item">
           <span class="contact-card__label">{labels.email}</span>
           <span class="contact-card__value"><a href={`mailto:${profile.email}`}>{profile.email}</a></span>
+        </div>
+        <div class="contact-card__item">
+          <span class="contact-card__label">{labels.phone}</span>
+          <span class="contact-card__value">{profile.phone}</span>
         </div>
         <div class="contact-card__item">
           <span class="contact-card__label">{labels.location}</span>
           <span class="contact-card__value">{profile.location}</span>
         </div>
       </div>
-    </section>
-
-    <!-- 專業簡介 -->
-    <section class="cv-section" id="professional-profile">
-      <h2>{labels.professionalProfile}</h2>
-      <p class="profile-text">{profile.professionalProfile[locale]}</p>
-    </section>
-
-    <!-- 核心技能 -->
-    <section class="cv-section" id="core-skills">
-      <h2>{labels.coreSkills}</h2>
-      <div class="skills-grid">
-        {coreSkills.map((group) => (
-          <div class="skill-group">
-            <h3>{group.heading[locale]}</h3>
-            <ul>
-              {group.items.map((item) => <li>{item[locale]}</li>)}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- 工作經歷 -->
-    <section class="cv-section" id="work-experience">
-      <h2>{labels.workExperience}</h2>
-      {workExperience.map((exp) => (
-        <div class="experience-entry">
-          <div class="experience-header">
-            <h3>{exp.role[locale]}</h3>
-            <p class="experience-employer">{exp.employer[locale]}</p>
-          </div>
-          <ul>
-            {exp.bullets.map((bullet) => <li>{bullet[locale]}</li>)}
-          </ul>
-        </div>
-      ))}
-    </section>
-
-    <!-- 訓練與證照 -->
-    <section class="cv-section" id="training-certifications">
-      <h2>{labels.trainingCertifications}</h2>
-      {certifications.map((cert) => (
-        <div class="cert-entry">
-          <div class="cert-header">
-            <h3>{cert.name[locale]}</h3>
-            {cert.issuer && <p class="cert-issuer">{cert.issuer[locale]}</p>}
-            {cert.duration && <p class="cert-duration">{labels.duration}：{cert.duration[locale]}</p>}
-          </div>
-          {cert.bullets && (
-            <ul>
-              {cert.bullets.map((bullet) => <li>{bullet[locale]}</li>)}
-            </ul>
-          )}
-        </div>
-      ))}
-    </section>
-
-    <!-- 訓練專案 -->
-    <section class="cv-section" id="training-projects">
-      <h2>{labels.trainingProjects}</h2>
-      <div class="training-grid">
-        {trainingProjects.map((tp) => (
-          <div class="training-card">
-            <h3>{tp.name[locale]}</h3>
-            <ul>
-              {tp.bullets.map((bullet) => <li>{bullet[locale]}</li>)}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- 作品佐證 -->
-    <section class="cv-section" id="project-evidence">
-      <h2>{labels.projectEvidence}</h2>
-      <ProjectGrid locale={locale} />
-    </section>
-
-    <!-- 其他背景 -->
-    <section class="cv-section" id="additional-background">
-      <h2>{labels.additionalBackground}</h2>
-      <ul class="background-list">
-        {additionalBackground.map((item) => <li>{item[locale]}</li>)}
-      </ul>
     </section>
   </div>
 
