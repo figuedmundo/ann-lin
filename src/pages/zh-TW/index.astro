@@ -1,41 +1,132 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectGrid from '../../components/ProjectGrid.astro';
-import { navigation, profile, ui } from '../../data/site';
+import {
+  profile,
+  coreSkills,
+  workExperience,
+  certifications,
+  trainingProjects,
+  additionalBackground,
+  cvLabels,
+} from '../../data/site';
 
 const locale = 'zh-TW';
+const labels = cvLabels[locale];
 ---
-<BaseLayout title="林庭安 Ann — 木作與室內設計作品集" description={profile.headline[locale]} locale={locale} alternatePath="/en">
-  <section class="hero">
-    <div class="hero__copy">
-      <p class="eyebrow">{profile.intro[locale]}</p>
-      <h1>{profile.headline[locale]}</h1>
-      <p>{profile.bio[locale]}</p>
-      <div class="hero__actions">
-        <a class="button" href="#work">{navigation[locale].work}</a>
-        <a class="button button--ghost" href={profile.pdfPath}>木循環簡報</a>
+
+<BaseLayout title="林庭安 Ann — 木作履歷" description={profile.professionalProfile[locale]} locale={locale} alternatePath="/en">
+  <div class="cv-page">
+    <!-- CV Hero -->
+    <header class="cv-hero">
+      <p class="cv-intro">{profile.intro[locale]}</p>
+      <h1>{profile.name}</h1>
+      <p class="cv-headline">{profile.headline[locale]}</p>
+    </header>
+
+    <!-- 聯絡資訊 -->
+    <section class="cv-section" id="contact-details">
+      <h2>{labels.contactDetails}</h2>
+      <div class="contact-card">
+        <div class="contact-card__item">
+          <span class="contact-card__label">{labels.phone}</span>
+          <span class="contact-card__value">{profile.phone}</span>
+        </div>
+        <div class="contact-card__item">
+          <span class="contact-card__label">{labels.email}</span>
+          <span class="contact-card__value"><a href={`mailto:${profile.email}`}>{profile.email}</a></span>
+        </div>
+        <div class="contact-card__item">
+          <span class="contact-card__label">{labels.location}</span>
+          <span class="contact-card__value">{profile.location}</span>
+        </div>
       </div>
-    </div>
-    <figure class="hero__image">
-      <img src={profile.heroImage} alt="林庭安在工坊中進行木作" />
-    </figure>
-  </section>
-  <section class="section story-section" id="story">
-    <p class="eyebrow">{navigation[locale].story}</p>
-    <h2>{ui.storyTitle[locale]}</h2>
-    <p>這個網站把木循環工作坊簡報轉化成可瀏覽、可投遞、可持續擴充的線上履歷。重點不是把 PDF 原封不動放上網，而是讓訪客快速理解 Ann 的設計背景、木作訓練與舊材再生方向。</p>
-  </section>
-  <ProjectGrid locale={locale} />
-  <section class="section process-section" id="process">
-    <p class="eyebrow">{navigation[locale].process}</p>
-    <h2>{ui.processTitle[locale]}</h2>
-    <div class="process-grid">
-      <p>室內設計訓練帶來比例、動線、材質與現場整合能力；木作訓練讓這些想法回到手、工具與材料本身。</p>
-      <p>下一步會補強每個作品的過程照片、材料來源與技法說明，讓作品不只好看，也能證明實作能力。</p>
-    </div>
-  </section>
-  <footer class="contact-section" id="contact">
-    <p class="eyebrow">{ui.contactTitle[locale]}</p>
-    <a href={`mailto:${profile.email}`}>{profile.email}</a>
-  </footer>
+    </section>
+
+    <!-- 專業簡介 -->
+    <section class="cv-section" id="professional-profile">
+      <h2>{labels.professionalProfile}</h2>
+      <p class="profile-text">{profile.professionalProfile[locale]}</p>
+    </section>
+
+    <!-- 核心技能 -->
+    <section class="cv-section" id="core-skills">
+      <h2>{labels.coreSkills}</h2>
+      <div class="skills-grid">
+        {coreSkills.map((group) => (
+          <div class="skill-group">
+            <h3>{group.heading[locale]}</h3>
+            <ul>
+              {group.items.map((item) => <li>{item[locale]}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 工作經歷 -->
+    <section class="cv-section" id="work-experience">
+      <h2>{labels.workExperience}</h2>
+      {workExperience.map((exp) => (
+        <div class="experience-entry">
+          <div class="experience-header">
+            <h3>{exp.role[locale]}</h3>
+            <p class="experience-employer">{exp.employer[locale]}</p>
+          </div>
+          <ul>
+            {exp.bullets.map((bullet) => <li>{bullet[locale]}</li>)}
+          </ul>
+        </div>
+      ))}
+    </section>
+
+    <!-- 訓練與證照 -->
+    <section class="cv-section" id="training-certifications">
+      <h2>{labels.trainingCertifications}</h2>
+      {certifications.map((cert) => (
+        <div class="cert-entry">
+          <div class="cert-header">
+            <h3>{cert.name[locale]}</h3>
+            {cert.issuer && <p class="cert-issuer">{cert.issuer[locale]}</p>}
+            {cert.duration && <p class="cert-duration">{labels.duration}：{cert.duration[locale]}</p>}
+          </div>
+          {cert.bullets && (
+            <ul>
+              {cert.bullets.map((bullet) => <li>{bullet[locale]}</li>)}
+            </ul>
+          )}
+        </div>
+      ))}
+    </section>
+
+    <!-- 訓練專案 -->
+    <section class="cv-section" id="training-projects">
+      <h2>{labels.trainingProjects}</h2>
+      <div class="training-grid">
+        {trainingProjects.map((tp) => (
+          <div class="training-card">
+            <h3>{tp.name[locale]}</h3>
+            <ul>
+              {tp.bullets.map((bullet) => <li>{bullet[locale]}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 作品佐證 -->
+    <section class="cv-section" id="project-evidence">
+      <h2>{labels.projectEvidence}</h2>
+      <ProjectGrid locale={locale} />
+    </section>
+
+    <!-- 其他背景 -->
+    <section class="cv-section" id="additional-background">
+      <h2>{labels.additionalBackground}</h2>
+      <ul class="background-list">
+        {additionalBackground.map((item) => <li>{item[locale]}</li>)}
+      </ul>
+    </section>
+  </div>
+
 </BaseLayout>

@@ -1,41 +1,132 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectGrid from '../../components/ProjectGrid.astro';
-import { navigation, profile, ui } from '../../data/site';
+import {
+  profile,
+  coreSkills,
+  workExperience,
+  certifications,
+  trainingProjects,
+  additionalBackground,
+  cvLabels,
+} from '../../data/site';
 
 const locale = 'en';
+const labels = cvLabels[locale];
 ---
-<BaseLayout title="Ann / 林庭安 — Woodwork Portfolio" description={profile.headline[locale]} locale={locale} alternatePath="/zh-TW">
-  <section class="hero">
-    <div class="hero__copy">
-      <p class="eyebrow">{profile.intro[locale]}</p>
-      <h1>{profile.headline[locale]}</h1>
-      <p>{profile.bio[locale]}</p>
-      <div class="hero__actions">
-        <a class="button" href="#work">{navigation[locale].work}</a>
-        <a class="button button--ghost" href={profile.pdfPath}>Workshop PDF</a>
+
+<BaseLayout title="Ting-An Lin — Woodworker CV" description={profile.professionalProfile[locale]} locale={locale} alternatePath="/zh-TW">
+  <div class="cv-page">
+    <!-- CV Hero -->
+    <header class="cv-hero">
+      <p class="cv-intro">{profile.intro[locale]}</p>
+      <h1>{profile.name}</h1>
+      <p class="cv-headline">{profile.headline[locale]}</p>
+    </header>
+
+    <!-- Contact Details -->
+    <section class="cv-section" id="contact-details">
+      <h2>{labels.contactDetails}</h2>
+      <div class="contact-card">
+        <div class="contact-card__item">
+          <span class="contact-card__label">{labels.phone}</span>
+          <span class="contact-card__value">{profile.phone}</span>
+        </div>
+        <div class="contact-card__item">
+          <span class="contact-card__label">{labels.email}</span>
+          <span class="contact-card__value"><a href={`mailto:${profile.email}`}>{profile.email}</a></span>
+        </div>
+        <div class="contact-card__item">
+          <span class="contact-card__label">{labels.location}</span>
+          <span class="contact-card__value">{profile.location}</span>
+        </div>
       </div>
-    </div>
-    <figure class="hero__image">
-      <img src={profile.heroImage} alt="Ann working with wood in a workshop" />
-    </figure>
-  </section>
-  <section class="section story-section" id="story">
-    <p class="eyebrow">{navigation[locale].story}</p>
-    <h2>{ui.storyTitle[locale]}</h2>
-    <p>Ann’s strongest professional thread is transformation: spaces into drawings, raw timber into objects, discarded material into new value. This portfolio turns the workshop presentation into a living CV with project evidence instead of a static document.</p>
-  </section>
-  <ProjectGrid locale={locale} />
-  <section class="section process-section" id="process">
-    <p class="eyebrow">{navigation[locale].process}</p>
-    <h2>{ui.processTitle[locale]}</h2>
-    <div class="process-grid">
-      <p>Interior design gives Ann composition, proportion, and site awareness. Woodworking adds tolerance, material behavior, and the discipline of making ideas physically true.</p>
-      <p>The next step is deeper evidence: more process photos, material notes, and before/after documentation for restoration and reclaimed wood projects.</p>
-    </div>
-  </section>
-  <footer class="contact-section" id="contact">
-    <p class="eyebrow">{ui.contactTitle[locale]}</p>
-    <a href={`mailto:${profile.email}`}>{profile.email}</a>
-  </footer>
+    </section>
+
+    <!-- Professional Profile -->
+    <section class="cv-section" id="professional-profile">
+      <h2>{labels.professionalProfile}</h2>
+      <p class="profile-text">{profile.professionalProfile[locale]}</p>
+    </section>
+
+    <!-- Core Skills -->
+    <section class="cv-section" id="core-skills">
+      <h2>{labels.coreSkills}</h2>
+      <div class="skills-grid">
+        {coreSkills.map((group) => (
+          <div class="skill-group">
+            <h3>{group.heading[locale]}</h3>
+            <ul>
+              {group.items.map((item) => <li>{item[locale]}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Work Experience -->
+    <section class="cv-section" id="work-experience">
+      <h2>{labels.workExperience}</h2>
+      {workExperience.map((exp) => (
+        <div class="experience-entry">
+          <div class="experience-header">
+            <h3>{exp.role[locale]}</h3>
+            <p class="experience-employer">{exp.employer[locale]}</p>
+          </div>
+          <ul>
+            {exp.bullets.map((bullet) => <li>{bullet[locale]}</li>)}
+          </ul>
+        </div>
+      ))}
+    </section>
+
+    <!-- Training and Certifications -->
+    <section class="cv-section" id="training-certifications">
+      <h2>{labels.trainingCertifications}</h2>
+      {certifications.map((cert) => (
+        <div class="cert-entry">
+          <div class="cert-header">
+            <h3>{cert.name[locale]}</h3>
+            {cert.issuer && <p class="cert-issuer">{cert.issuer[locale]}</p>}
+            {cert.duration && <p class="cert-duration">{labels.duration}: {cert.duration[locale]}</p>}
+          </div>
+          {cert.bullets && (
+            <ul>
+              {cert.bullets.map((bullet) => <li>{bullet[locale]}</li>)}
+            </ul>
+          )}
+        </div>
+      ))}
+    </section>
+
+    <!-- Training Projects -->
+    <section class="cv-section" id="training-projects">
+      <h2>{labels.trainingProjects}</h2>
+      <div class="training-grid">
+        {trainingProjects.map((tp) => (
+          <div class="training-card">
+            <h3>{tp.name[locale]}</h3>
+            <ul>
+              {tp.bullets.map((bullet) => <li>{bullet[locale]}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Project Evidence (Portfolio) -->
+    <section class="cv-section" id="project-evidence">
+      <h2>{labels.projectEvidence}</h2>
+      <ProjectGrid locale={locale} />
+    </section>
+
+    <!-- Additional Background -->
+    <section class="cv-section" id="additional-background">
+      <h2>{labels.additionalBackground}</h2>
+      <ul class="background-list">
+        {additionalBackground.map((item) => <li>{item[locale]}</li>)}
+      </ul>
+    </section>
+  </div>
+
 </BaseLayout>

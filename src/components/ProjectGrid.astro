@@ -1,7 +1,7 @@
 ---
 import ProjectCard from './ProjectCard.astro';
 import type { Locale } from '../data/site';
-import { projects, ui } from '../data/site';
+import { projects } from '../data/site';
 
 type Props = {
   locale: Locale;
@@ -9,12 +9,6 @@ type Props = {
 
 const { locale } = Astro.props;
 ---
-<section class="section portfolio-section" id="work" aria-labelledby="work-title">
-  <div class="section-heading">
-    <p class="eyebrow">Portfolio</p>
-    <h2 id="work-title">{ui.featuredWork[locale]}</h2>
-  </div>
-  <div class="portfolio-grid">
-    {projects.map((project, index) => <ProjectCard project={project} locale={locale} featured={index === 0} />)}
-  </div>
-</section>
+<div class="portfolio-grid">
+  {projects.map((project, index) => <ProjectCard project={project} locale={locale} featured={index === 0} />)}
+</div>
