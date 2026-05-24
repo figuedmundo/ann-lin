@@ -23,12 +23,12 @@ const featuredProject = projects[0];
     <header class="cv-hero">
       <div class="cv-hero__copy">
         <p class="cv-intro">{profile.intro[locale]}</p>
-        <h1>{profile.name}</h1>
+        <h1>{profile.name[locale]}</h1>
         <p class="cv-headline">{profile.headline[locale]}</p>
         <p class="cv-lede">{profile.bio[locale]}</p>
       </div>
       <figure class="cv-hero__visual">
-        <img src={profile.heroImage} alt={profile.name} loading="eager" />
+        <img src={profile.heroImage} alt={profile.name[locale]} loading="eager" />
         <figcaption>
           <span>{profile.location}</span>
           <strong>{profile.intro[locale]}</strong>
