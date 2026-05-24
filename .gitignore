@@ -34,7 +34,13 @@ venv/
 
 # Generated PDF
 *.pdf
+!public/downloads/
+!public/downloads/*.pdf
 .tmp/
+
+# Node / Astro
+node_modules/
+.astro/
 
 # Local tool configs (contain secrets / machine-specific)
 opencode.json

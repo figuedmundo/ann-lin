@@ -1,43 +1,89 @@
-# Wood Cabin Maker Digital CV & Portfolio
+# Ann / 林庭安 Online CV & Woodwork Portfolio
 
-A modern, responsive HTML/CSS CV and portfolio template designed specifically for woodworkers, carpenters, and cabin makers. It uses a "Combination Portfolio" layout that leads with practical projects and certifications, perfect for entry-level tradespeople.
+A bilingual Astro portfolio/CV for Ann / 林庭安, focused on interior design, hands-on woodworking, reclaimed material, and project storytelling for Taiwan and Canada audiences.
 
-## Features
+## Stack
 
-- **Warm Timber Modern Aesthetic:** A custom color palette featuring warm creams (`#F5F0E8`), rich mahogany (`#5D4037`), and deep walnut (`#3E2723`).
-- **Interactive Portfolio Gallery:** A CSS Grid layout for showcasing physical projects, complete with a JavaScript Lightbox for full-screen image viewing.
-- **Print & PDF Optimized:** Includes strict `@media print` rules ensuring the layout formats cleanly into a 2-column grid when printed or exported to PDF.
-- **No Heavy Frameworks:** Pure HTML5, CSS3, and vanilla JavaScript for maximum speed and easy editing.
+- **Framework:** Astro static site
+- **Package manager:** pnpm only
+- **Languages/routes:** `/zh-TW` and `/en`
+- **Content source:** typed project/profile data in `src/data/site.ts`
+- **Assets:** public images in `public/assets/pictures/`, workshop PDF in `public/downloads/`
 
-## How to Customize
+## Requirements
 
-1. **Personal Information:** 
-   Open `index.html` and replace "Alex Woods" and the placeholder contact information in the `<header>` section with your actual details.
-   
-2. **Professional Profile:**
-   Update the paragraph under the "Professional Profile" section to reflect your specific background and goals.
+Install pnpm if you do not already have it:
 
-3. **Certifications:**
-   Update the `<div class="certification-box">` with the exact name, date, and issuing body of your Wood Cabin Maker certification.
+```bash
+corepack enable
+corepack prepare pnpm@10.12.1 --activate
+```
 
-4. **Adding Your Project Photos:**
-   - Place your `.jpg` or `.png` project photos in the project folder.
-   - In the "Selected Projects" section of `index.html`, locate the `<img>` tags.
-   - Replace the `src="https://placehold.co/...` URL with the local path to your image (e.g., `src="my-oak-cabinet.jpg"`).
-   - Update the `alt` attribute and the title/description below each image.
+## Development
 
-5. **Skills & Education:**
-   Modify the lists under "Technical Skills" and "Education" to match your actual competencies and schooling.
+Install dependencies:
 
-## Exporting to PDF
+```bash
+pnpm install
+```
 
-Since this CV is optimized for print, you can generate a professional PDF in two ways:
+Start the local dev server:
 
-**Method 1: Browser Print**
-1. Open `index.html` in your web browser (Chrome/Edge recommended).
-2. Press `Ctrl + P` (or `Cmd + P` on Mac).
-3. Set the destination to "Save as PDF".
-4. Ensure "Background graphics" is enabled (if you want the background colors) and "Headers and footers" is disabled.
+```bash
+pnpm dev
+```
 
-**Method 2: Using the Python Script**
-You can use the included `export_cv.py` script to programmatically generate the PDF using Playwright (which respects the `@media print` rules perfectly).
+Open:
+
+- `http://localhost:4321/`
+- `http://localhost:4321/zh-TW`
+- `http://localhost:4321/en`
+
+## Build & Preview
+
+Create a production build:
+
+```bash
+pnpm build
+```
+
+Preview the production build locally:
+
+```bash
+pnpm preview
+```
+
+## Project Structure
+
+```text
+docs/roadmap.md              Roadmap and implementation milestones
+src/data/site.ts             Bilingual profile, UI strings, and project data
+src/layouts/BaseLayout.astro Shared document shell and language switch
+src/components/              Project cards and grid
+src/pages/zh-TW/             Mandarin pages
+src/pages/en/                English pages
+src/styles/global.css        Global visual system
+public/assets/pictures/      Portfolio images
+public/downloads/            Public PDF downloads
+```
+
+## Current Routes
+
+- `/` redirects to `/zh-TW`
+- `/zh-TW`
+- `/en`
+- `/zh-TW/projects/table-frame`
+- `/zh-TW/projects/small-objects`
+- `/zh-TW/projects/reuse-games`
+- `/en/projects/table-frame`
+- `/en/projects/small-objects`
+- `/en/projects/reuse-games`
+
+## Roadmap
+
+See `docs/roadmap.md` for the full implementation roadmap and next milestones.
+
+## Notes
+
+- Do not use `npm install` or commit `package-lock.json`; this project uses `pnpm-lock.yaml`.
+- The legacy `index.html` and `style.css` remain in the repository as reference while the Astro implementation lives in `src/`.
