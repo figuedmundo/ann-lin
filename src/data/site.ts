@@ -45,7 +45,10 @@ export const localeLabels: Record<Locale, string> = {
 };
 
 export const profile = {
-  name: 'Ting-An Lin / 林庭安',
+  name: {
+    'zh-TW': '林庭安',
+    en: 'Ting-An Lin',
+  },
   email: 'ann810613@hotmail.com',
   phone: '0980404516',
   location: 'Taiwan',

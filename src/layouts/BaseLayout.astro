@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import type { Locale } from '../data/site';
-import { localeLabels, otherLocale } from '../data/site';
+import { localeLabels, otherLocale, profile } from '../data/site';
 
 type Props = {
   title: string;
@@ -28,7 +28,7 @@ const { title, description, locale, alternatePath = `/${otherLocale(locale)}` } 
     <div class="grain-field" aria-hidden="true"></div>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
-      <a class="brand" href={`/${locale}`}>Ting-An Lin / 林庭安</a>
+      <a class="brand" href={`/${locale}`}>{profile.name[locale]}</a>
       <a class="language-switch" href={alternatePath} aria-label={`Switch language to ${localeLabels[otherLocale(locale)]}`}>
         {localeLabels[otherLocale(locale)]}
       </a>
