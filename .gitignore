@@ -44,3 +44,5 @@ node_modules/
 
 # Local tool configs (contain secrets / machine-specific)
 opencode.json
+
+.playwright-mcp/
