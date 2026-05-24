@@ -12,8 +12,8 @@ The homepage follows a CV-shaped hierarchy aligned with `cv.md`: Contact Details
 - **Package manager:** pnpm only
 - **Languages/routes:** explicit static routes `/zh-TW` and `/en`
 - **Content source:** typed bilingual data in `src/data/site.ts`
-- **Assets:** images in `public/assets/pictures/`, workshop PDF in `public/downloads/`
-- **Hosting target:** any static host (Netlify, Vercel, Cloudflare Pages, GitHub Pages)
+- **Assets:** images in `public/assets/pictures/`
+- **Hosting target:** any static host Vercel
 
 ## Requirements
 
@@ -54,7 +54,6 @@ src/pages/zh-TW/             Mandarin pages
 src/pages/en/                English pages
 src/styles/global.css        Global visual system (CV-specific styles included)
 public/assets/pictures/      Portfolio images
-public/downloads/            Workshop PDF download
 cv.md                        Content source of truth for homepage sections
 ```
 
@@ -75,7 +74,7 @@ cv.md                        Content source of truth for homepage sections
 - [x] Shared layout, visual system, and global styles
 - [x] Bilingual data model in `src/data/site.ts` with full CV fields
 - [x] Project detail routes for curated case studies
-- [x] Real photos and workshop PDF in `public/`
+- [x] Real photos in `public/`
 - [x] Homepage restructured as CV-first (aligned with `cv.md`) — Contact, Profile, Skills, Experience, Training, Project Evidence, Background
 - [x] CV-specific styles for dense content, grouped skills, experience entries, and responsive layout
 
@@ -92,7 +91,6 @@ cv.md                        Content source of truth for homepage sections
 - [ ] Add more photos per project: source material, process, detail, finished object
 - [ ] Split grouped projects into separate case studies once image coverage is strong
 - [ ] Add material/technique metadata for each project
-- [ ] Add downloadable PDF links per language if translated PDFs are created
 
 ### Interaction & Polish
 
@@ -102,13 +100,7 @@ cv.md                        Content source of truth for homepage sections
 - [ ] Add Open Graph images and SEO metadata per language
 - [ ] Add print styles for recruiter-friendly CV pages
 
-### Quality & Launch
 
-- [ ] Run Astro check/build
-- [ ] Test mobile layout
-- [ ] Test language switch links
-- [ ] Test project pages and PDF download
-- [ ] Deploy static build
 
 ## Open Questions
 
