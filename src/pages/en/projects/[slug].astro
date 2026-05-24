@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { profile, projects } from '../../../data/site';
+
+const locale = 'en';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+---
+<BaseLayout title={`${project.title[locale]} — Ann Portfolio`} description={project.summary[locale]} locale={locale} alternatePath={`/zh-TW/projects/${project.slug}`}>
+  <article class="project-page">
+    <a class="back-link" href={`/${locale}#work`}>← Back to work</a>
+    <header class="project-hero">
+      <p class="eyebrow">{project.kicker[locale]}</p>
+      <h1>{project.title[locale]}</h1>
+      <p>{project.summary[locale]}</p>
+    </header>
+    <div class="project-gallery">
+      {project.gallery.map((image) => <img src={image} alt={project.title[locale]} loading="lazy" />)}
+    </div>
+    <section class="project-story">
+      <h2>Material story</h2>
+      <p>{project.story[locale]}</p>
+      <ul>
+        {project.meta.map((item) => <li>{item[locale]}</li>)}
+      </ul>
+    </section>
+    <footer class="project-contact">
+      <a class="button" href={`mailto:${profile.email}`}>Contact Ann</a>
+    </footer>
+  </article>
+</BaseLayout>

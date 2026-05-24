@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectGrid from '../../components/ProjectGrid.astro';
+import { navigation, profile, ui } from '../../data/site';
+
+const locale = 'en';
+---
+<BaseLayout title="Ann / 林庭安 — Woodwork Portfolio" description={profile.headline[locale]} locale={locale} alternatePath="/zh-TW">
+  <section class="hero">
+    <div class="hero__copy">
+      <p class="eyebrow">{profile.intro[locale]}</p>
+      <h1>{profile.headline[locale]}</h1>
+      <p>{profile.bio[locale]}</p>
+      <div class="hero__actions">
+        <a class="button" href="#work">{navigation[locale].work}</a>
+        <a class="button button--ghost" href={profile.pdfPath}>Workshop PDF</a>
+      </div>
+    </div>
+    <figure class="hero__image">
+      <img src={profile.heroImage} alt="Ann working with wood in a workshop" />
+    </figure>
+  </section>
+  <section class="section story-section" id="story">
+    <p class="eyebrow">{navigation[locale].story}</p>
+    <h2>{ui.storyTitle[locale]}</h2>
+    <p>Ann’s strongest professional thread is transformation: spaces into drawings, raw timber into objects, discarded material into new value. This portfolio turns the workshop presentation into a living CV with project evidence instead of a static document.</p>
+  </section>
+  <ProjectGrid locale={locale} />
+  <section class="section process-section" id="process">
+    <p class="eyebrow">{navigation[locale].process}</p>
+    <h2>{ui.processTitle[locale]}</h2>
+    <div class="process-grid">
+      <p>Interior design gives Ann composition, proportion, and site awareness. Woodworking adds tolerance, material behavior, and the discipline of making ideas physically true.</p>
+      <p>The next step is deeper evidence: more process photos, material notes, and before/after documentation for restoration and reclaimed wood projects.</p>
+    </div>
+  </section>
+  <footer class="contact-section" id="contact">
+    <p class="eyebrow">{ui.contactTitle[locale]}</p>
+    <a href={`mailto:${profile.email}`}>{profile.email}</a>
+  </footer>
+</BaseLayout>

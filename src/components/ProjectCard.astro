@@ -1,0 +1,25 @@
+---
+import type { Locale, Project } from '../data/site';
+import { localizedProjectPath, ui } from '../data/site';
+
+type Props = {
+  project: Project;
+  locale: Locale;
+  featured?: boolean;
+};
+
+const { project, locale, featured = false } = Astro.props;
+---
+<article class:list={['project-card', { 'project-card--featured': featured }]}>
+  <a href={localizedProjectPath(locale, project.slug)} aria-label={`${ui.viewProject[locale]}: ${project.title[locale]}`}>
+    <figure>
+      <img src={project.cover} alt={project.title[locale]} loading="lazy" />
+    </figure>
+    <div class="project-card__body">
+      <p class="eyebrow">{project.kicker[locale]}</p>
+      <h3>{project.title[locale]}</h3>
+      <p>{project.summary[locale]}</p>
+      <span>{ui.viewProject[locale]} →</span>
+    </div>
+  </a>
+</article>

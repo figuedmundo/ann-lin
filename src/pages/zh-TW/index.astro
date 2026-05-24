@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectGrid from '../../components/ProjectGrid.astro';
+import { navigation, profile, ui } from '../../data/site';
+
+const locale = 'zh-TW';
+---
+<BaseLayout title="林庭安 Ann — 木作與室內設計作品集" description={profile.headline[locale]} locale={locale} alternatePath="/en">
+  <section class="hero">
+    <div class="hero__copy">
+      <p class="eyebrow">{profile.intro[locale]}</p>
+      <h1>{profile.headline[locale]}</h1>
+      <p>{profile.bio[locale]}</p>
+      <div class="hero__actions">
+        <a class="button" href="#work">{navigation[locale].work}</a>
+        <a class="button button--ghost" href={profile.pdfPath}>木循環簡報</a>
+      </div>
+    </div>
+    <figure class="hero__image">
+      <img src={profile.heroImage} alt="林庭安在工坊中進行木作" />
+    </figure>
+  </section>
+  <section class="section story-section" id="story">
+    <p class="eyebrow">{navigation[locale].story}</p>
+    <h2>{ui.storyTitle[locale]}</h2>
+    <p>這個網站把木循環工作坊簡報轉化成可瀏覽、可投遞、可持續擴充的線上履歷。重點不是把 PDF 原封不動放上網，而是讓訪客快速理解 Ann 的設計背景、木作訓練與舊材再生方向。</p>
+  </section>
+  <ProjectGrid locale={locale} />
+  <section class="section process-section" id="process">
+    <p class="eyebrow">{navigation[locale].process}</p>
+    <h2>{ui.processTitle[locale]}</h2>
+    <div class="process-grid">
+      <p>室內設計訓練帶來比例、動線、材質與現場整合能力；木作訓練讓這些想法回到手、工具與材料本身。</p>
+      <p>下一步會補強每個作品的過程照片、材料來源與技法說明，讓作品不只好看，也能證明實作能力。</p>
+    </div>
+  </section>
+  <footer class="contact-section" id="contact">
+    <p class="eyebrow">{ui.contactTitle[locale]}</p>
+    <a href={`mailto:${profile.email}`}>{profile.email}</a>
+  </footer>
+</BaseLayout>
