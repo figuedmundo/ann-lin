@@ -55,8 +55,8 @@ export const profile = {
   pdfPath: '/downloads/wood-cycle-workshop-lin-ting-an.pdf',
   heroImage: '/assets/pictures/portrait.JPG',
   intro: {
-    'zh-TW': '室內設計背景 × 木作實踐 × 舊木再生',
-    en: 'Interior design background · Woodworking practice · Reclaimed wood',
+    'zh-TW': '木作實踐 × 舊木再生',
+    en: 'Woodworking · Reclaimed wood',
   },
   headline: {
     'zh-TW': '從空間設計走向雙手實作，讓舊木材以新的形式延續價值。',
