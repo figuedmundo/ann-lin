@@ -11,6 +11,25 @@ type Props = {
 };
 
 const { title, description, locale, alternatePath = `/${otherLocale(locale)}` } = Astro.props;
+
+const navLabels = {
+  en: {
+    work: 'Work',
+    profile: 'Profile',
+    skills: 'Skills',
+    training: 'Training',
+    contact: 'Contact',
+  },
+  'zh-TW': {
+    work: '作品',
+    profile: '簡介',
+    skills: '技能',
+    training: '訓練',
+    contact: '聯絡',
+  }
+};
+
+const nav = navLabels[locale];
 ---
 <!doctype html>
 <html lang={locale}>
@@ -22,19 +41,130 @@ const { title, description, locale, alternatePath = `/${otherLocale(locale)}` } 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="custom-cursor" aria-hidden="true">
+      <div class="custom-cursor__ring"></div>
+      <div class="custom-cursor__point"></div>
+    </div>
+
     <div class="grain-field" aria-hidden="true"></div>
+    
     <a class="skip-link" href="#main">Skip to content</a>
+    
     <header class="site-header">
-      <a class="brand" href={`/${locale}`}>{profile.name[locale]}</a>
-      <a class="language-switch" href={alternatePath} aria-label={`Switch language to ${localeLabels[otherLocale(locale)]}`}>
-        {localeLabels[otherLocale(locale)]}
-      </a>
+      <div class="site-header__container">
+        <a class="brand" href={`/${locale}`}>
+          <span class="brand__icon">⌗</span>
+          <span class="brand__name">{profile.name[locale]}</span>
+        </a>
+        <nav class="site-nav">
+          <a href="#project-evidence" class="nav-link">{nav.work}</a>
+          <a href="#professional-profile" class="nav-link">{nav.profile}</a>
+          <a href="#core-capabilities" class="nav-link">{nav.skills}</a>
+          <a href="#training-certifications" class="nav-link">{nav.training}</a>
+          <a href="#contact-details" class="nav-link">{nav.contact}</a>
+        </nav>
+        <a class="language-switch" href={alternatePath} aria-label={`Switch language to ${localeLabels[otherLocale(locale)]}`}>
+          {localeLabels[otherLocale(locale)]}
+        </a>
+      </div>
     </header>
+
     <main id="main">
       <slot />
     </main>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Custom Cursor Movement
+        const cursor = document.getElementById('custom-cursor');
+        if (cursor) {
+          // Detect if device supports touch/pointer precision
+          const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+          if (isTouchDevice) {
+            cursor.style.display = 'none';
+          } else {
+            let posX = 0, posY = 0;
+            let mouseX = 0, mouseY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+              mouseX = e.clientX;
+              mouseY = e.clientY;
+            });
+
+            // Smooth lag effect for the cursor ring
+            const updateCursor = () => {
+              posX += (mouseX - posX) * 0.15;
+              posY += (mouseY - posY) * 0.15;
+              cursor.style.transform = `translate3d(${posX}px, ${posY}px, 0)`;
+              requestAnimationFrame(updateCursor);
+            };
+            updateCursor();
+
+            const addHoverClass = () => cursor.classList.add('is-hovered');
+            const removeHoverClass = () => cursor.classList.remove('is-hovered');
+
+            const refreshHoverListeners = () => {
+              const hoverElements = document.querySelectorAll('a, button, .project-card a, input, select, textarea, .language-switch');
+              hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', addHoverClass);
+                el.addEventListener('mouseleave', removeHoverClass);
+              });
+            };
+            refreshHoverListeners();
+
+            // Re-apply on dynamic changes if any
+            const observer = new MutationObserver(refreshHoverListeners);
+            observer.observe(document.body, { childList: true, subtree: true });
+          }
+        }
+
+        // Active Nav Section Tracking
+        const sections = document.querySelectorAll('section[id], div[id]');
+        const navLinks = document.querySelectorAll('.site-nav a');
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute('id');
+              navLinks.forEach(link => {
+                link.classList.remove('is-active');
+                if (link.getAttribute('href') === `#${id}`) {
+                  link.classList.add('is-active');
+                }
+              });
+            }
+          });
+        }, {
+          rootMargin: '-30% 0px -50% 0px'
+        });
+
+        sections.forEach(section => {
+          sectionObserver.observe(section);
+        });
+
+        // Scroll Reveal Animations
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.05,
+          rootMargin: '0px 0px -40px 0px'
+        });
+
+        const revealElements = document.querySelectorAll('.cv-section, .cv-hero, .featured-proof, .project-card, .skills-grid--chips .skill-group');
+        revealElements.forEach(el => {
+          el.classList.add('reveal-on-scroll');
+          revealObserver.observe(el);
+        });
+      });
+    </script>
   </body>
 </html>
