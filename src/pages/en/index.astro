@@ -8,7 +8,6 @@ import {
   workExperience,
   certifications,
   trainingProjects,
-  additionalBackground,
   cvLabels,
   ui,
 } from '../../data/site';
@@ -25,7 +24,6 @@ const featuredProject = projects[0];
         <p class="cv-intro">{profile.intro[locale]}</p>
         <h1>{profile.name[locale]}</h1>
         <p class="cv-headline">{profile.headline[locale]}</p>
-        <p class="cv-lede">{profile.bio[locale]}</p>
       </div>
       <figure class="cv-hero__visual">
         <img src={profile.heroImage} alt={profile.name[locale]} loading="eager" />
@@ -35,6 +33,11 @@ const featuredProject = projects[0];
         </figcaption>
       </figure>
     </header>
+
+    <section class="cv-section" id="professional-profile">
+      <h2>{labels.professionalProfile}</h2>
+      <p class="profile-text">{profile.professionalProfile[locale]}</p>
+    </section>
 
     <section class="cv-section cv-section--proof" id="project-evidence">
       <div class="cv-section__lead">
@@ -53,11 +56,6 @@ const featuredProject = projects[0];
         <img src={featuredProject.gallery[0]} alt={featuredProject.title[locale]} loading="lazy" />
       </article>
       <ProjectGrid locale={locale} start={1} />
-    </section>
-
-    <section class="cv-section" id="professional-profile">
-      <h2>{labels.professionalProfile}</h2>
-      <p class="profile-text">{profile.professionalProfile[locale]}</p>
     </section>
 
     <section class="cv-section cv-section--split" id="core-capabilities">
@@ -121,13 +119,6 @@ const featuredProject = projects[0];
           ))}
         </div>
       </div>
-    </section>
-
-    <section class="cv-section" id="additional-background">
-      <h2>{labels.additionalBackground}</h2>
-      <ul class="background-list background-list--compact">
-        {additionalBackground.map((item) => <li>{item[locale]}</li>)}
-      </ul>
     </section>
 
     <section class="cv-section" id="contact-details">
