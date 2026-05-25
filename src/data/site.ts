@@ -47,7 +47,7 @@ export const localeLabels: Record<Locale, string> = {
 export const profile = {
   name: {
     'zh-TW': '林庭安',
-    en: 'Ting-An Lin',
+    en: 'Lin, Ting-An',
   },
   email: 'ann810613@hotmail.com',
   phone: '0980404516',
@@ -64,7 +64,7 @@ export const profile = {
   },
   bio: {
     'zh-TW': '我具備多年室內設計經驗，熟悉概念、圖面與工程監工流程。旅居歐洲期間，我被阿姆斯特丹的再利用文化與愛爾蘭以修復取代丟棄的生活哲學影響。回台後，我重新投入木作職訓並取得家具木工技術士丙級證照，希望把設計美學與修復技術帶進老屋、古蹟與日常家具。',
-    en: 'Ann brings interior design experience into practical woodworking. Time in Europe shaped her interest in reuse culture and repair-first living, and formal woodworking training gave her the technical foundation to transform reclaimed material into objects with function, restraint, and story.',
+    en: 'I brings interior design experience into practical woodworking.',
   },
   professionalProfile: {
     'zh-TW': '木作家具製作學員，具備室內設計背景與8個月政府密集木作職訓訓練。結合空間思維、材料感知與實作技能，創作實用且有想法的作品。特別關注舊木再利用、循環設計，以及與修復、保存和有意義的工藝相關的長期工作。',
